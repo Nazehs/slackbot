@@ -59,7 +59,7 @@ function findSelectedOption(originalMessage, actionCallbackId, selectedValue) {
 function findSelectedbuttons(originalMessage, actionCallbackId, selectedValue) {
 
   const attachment = findAttachment(originalMessage, actionCallbackId);
-  return attachment?.actions.find(o => o.value === selectedValue);
+  return attachment.actions.find(o => o.value === selectedValue);
 }
 // Action handling
 
