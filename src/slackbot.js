@@ -1,6 +1,5 @@
 const { WebClient } = require('@slack/web-api');
 const menu = require('./config/menu');
-const map = require('lodash');
 const axios = require('axios');
 const SLACK_TOKEN = process.env.SLACK_TOKEN;
 const SLACK_HOOK_URL = process.env.SLACK_HOOK_URL;
