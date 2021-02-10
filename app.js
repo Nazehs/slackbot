@@ -1,6 +1,4 @@
 require('dotenv').config();
-
-const { createServer } = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
 const { createEventAdapter } = require('@slack/events-api');

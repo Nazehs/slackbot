@@ -78,13 +78,13 @@ const bot = {
 
   startAppointment(userId) {
 
-    if (this.orders[userId.user.id]) {
-      return Promise.resolve({
-        channel: userId.channel,
-        text: 'I\'m already busy with you, please be patient',
-        replace_original: false,
-      });
-    }
+    // if (this.orders[userId.user.id]) {
+    //   return Promise.resolve({
+    //     channel: userId.channel,
+    //     text: 'I\'m already busy with you, please be patient',
+    //     replace_original: false,
+    //   });
+    // }
 
     // Initialize the order
     this.orders[userId.user.id] = {
