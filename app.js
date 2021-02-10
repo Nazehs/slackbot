@@ -10,7 +10,7 @@ const cors = require('cors');
 const bot = require('./src/slackbot');
 const api = require('./src/routes/api');
 const connection = require('./src/config/connection')
-
+const request = require('request-promise');
 // Create the server
 const app = express();
 
@@ -59,7 +59,6 @@ function findSelectedOption(originalMessage, actionCallbackId, selectedValue) {
 function findSelectedbuttons(originalMessage, actionCallbackId, selectedValue) {
 
   const attachment = findAttachment(originalMessage, actionCallbackId);
-  console.log(attachment);
   return attachment?.actions.find(o => o.value === selectedValue);
 }
 // Action handling
@@ -126,6 +125,7 @@ slackInteractions.action('order:select_time', (payload, respond) => {
 
     return updatedMessage;
   } catch (error) {
+
     console.log(`Time Error :::::: ${error}`);
 
   }
@@ -155,6 +155,7 @@ slackInteractions.action('order:select_number_scale', (payload, respond) => {
 
     return updatedMessage;
   } catch (error) {
+
     console.log(`Number Scale error ::::: ${error}`)
   }
 
@@ -200,6 +201,29 @@ app.use((err,req,res,next)=>{
     console.log(err);
     return next(err);
 });
+
+app.get('/', (req, res) =>{
+  res.send({status:'running'});
+});
+
+app.get('/auth/redirect', (req, res) =>{
+	var options = {
+  		uri: 'https://slack.com/api/oauth.access?code='
+  			+req.query.code+
+  			'&client_id='+process.env.CLIENT_ID+
+  			'&client_secret='+process.env.CLIENT_SECRET+
+  			'&redirect_uri='+process.env.REDIRECT_URI,
+		method: 'GET'
+  	}
+  	request(options, (error, response, body) => {
+  		var JSONresponse = JSON.parse(body)
+  		if (!JSONresponse.ok){
+  			res.send("Error encountered: \n"+JSON.stringify(JSONresponse)).status(200).end()
+  		}else{
+  			res.send("Success!")
+  		}
+  	})
+})
 
 app.use('/slack/events', slackEvents.requestListener());
 

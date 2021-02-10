@@ -323,11 +323,10 @@ const bot = {
 
   bookAppointment(userId) {
     const order = this.orders[userId.user.id];
-    console.log("%%%%%%%%%%%%% FINAL ORDER %%%%%%%%%%%%%%%%%");
-    console.log(this.getUserResponse());
     let params = this.getUserResponse();
     params['username']=userId.user.id;
 
+    // save the appointment details to the DB
     slackbot.createSlackAppointment(this.getUserResponse());
 
     return axios.post(SLACK_HOOK_URL, {

@@ -29,14 +29,6 @@ class slacbotController {
         try {
 
            let doc = await  slackbotInstance.insertOne(params)
-            // .then((doc) => {
-            //     return({
-            //         status: 0,
-            //         success: true,
-            //         message: doc.ops[0]
-            //     });
-
-            // })
             return doc;
 
 

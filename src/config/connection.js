@@ -1,9 +1,9 @@
-const MongoClient = require("mongodb");
+const {MongoClient} = require("mongodb");
 const catalogRequest = require('../controllers/slackbotController');
 const config = require("../config/config");
 
 MongoClient.connect(
-  config.SLACKBOT_URI,
+  process.env.SLACKBOT_URI,
   { w: 1, j: false, wtimeout: 3000, useNewUrlParser: true, useUnifiedTopology: true, poolSize: 50 }
 )
   .catch(err => {
