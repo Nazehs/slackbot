@@ -10,12 +10,11 @@ const cors = require('cors');
 const bot = require('./src/slackbot');
 const api = require('./src/routes/api');
 const connection = require('./src/config/connection')
-const request = require('request-promise');
+const axios = require('axios');
 // Create the server
 const app = express();
 
 const SLACK_SECRET_SIGNED = process.env.SLACK_SECRET_SIGNED
-const SLACK_TOKEN = process.env.SLACK_TOKEN;
 
 
 const slackEvents = createEventAdapter(SLACK_SECRET_SIGNED);
@@ -215,8 +214,8 @@ app.get('/auth/redirect', (req, res) =>{
   			'&redirect_uri='+process.env.REDIRECT_URI,
 		method: 'GET'
   	}
-  	request(options, (error, response, body) => {
-  		var JSONresponse = JSON.parse(body)
+  	axios.get(`https://slack.com/api/oauth.access?code='${req.query.code}&client_id=${process.env.CLIENT_ID}&client_secret=${process.env.CLIENT_SECRET}&redirect_uri=${process.env.REDIRECT_URI}`).then(response=>{
+  		var JSONresponse = JSON.parse(response)
   		if (!JSONresponse.ok){
   			res.send("Error encountered: \n"+JSON.stringify(JSONresponse)).status(200).end()
   		}else{
