@@ -51,7 +51,7 @@ function acknowledgeActionFromMessage(originalMessage, actionCallbackId, ackText
 function findSelectedOption(originalMessage, actionCallbackId, selectedValue) {
 
   const attachment = findAttachment(originalMessage, actionCallbackId);
-  return attachment?.actions[0]?.options.find(o => o.value === selectedValue);
+  return attachment.actions[0].options.find(o => o.value === selectedValue);
 }
 
 
